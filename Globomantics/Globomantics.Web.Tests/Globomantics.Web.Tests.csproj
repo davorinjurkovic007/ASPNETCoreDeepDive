@@ -23,6 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Globomantics.Infrastructure\Globomantics.Infrastructure.csproj" />
+    <ProjectReference Include="..\Globomantics.Web\Globomantics.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Using Include="Microsoft.VisualStudio.TestTools.UnitTesting" />
   </ItemGroup>
 
