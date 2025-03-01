@@ -1,7 +1,19 @@
+using Globomantics.Domain.Models;
+using Globomantics.Infrastructure.Data;
+using Globomantics.Infrastructure.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+builder.Services.AddDbContext<GlobomanticsContext>(ServiceLifetime.Scoped);
+
+builder.Services.AddTransient<IRepository<Customer>, CustomerRepository>();
+builder.Services.AddTransient<IRepository<Product>, ProductRepository>();
+builder.Services.AddTransient<IRepository<Order>, OrderRepository>();
+builder.Services.AddTransient<IRepository<Cart>, CartRepository>();
+builder.Services.AddTransient<ICartRepository, CartRepository>();
 
 var app = builder.Build();
 
@@ -24,5 +36,11 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
+using(var scope = app.Services.CreateAsyncScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<GlobomanticsContext>();
+
+    GlobomanticsContext.CreateInitialDatabase(context);
+}
 
 app.Run();
