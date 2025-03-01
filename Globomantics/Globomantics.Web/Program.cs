@@ -31,6 +31,14 @@ app.UseRouting();
 
 app.MapStaticAssets();
 
+// Alternative route to avoid attribute on the TicketDetails action
+//app.MapControllerRoute(
+//    name: "ticketDetailsRoute",
+//    defaults : new {action = "TicketDetails", controller = "Home" },
+//    pattern: "/details/{productId}/{slug?}")
+//    .WithStaticAssets();
+
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")

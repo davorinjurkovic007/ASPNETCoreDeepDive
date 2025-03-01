@@ -26,9 +26,23 @@ public class HomeController : Controller
         return View(products);
     }
 
+    /// <summary>
+    /// If you make your properties optional I would advice that you make them nullable.
+    /// Otherwise, you won't know that this might cause a problem
+    /// This was done with Alternative route to avoid attribute on the TicketDetails action, in Program.cs
+    /// Method signature must be then
+    /// public IActionResult TicketDetails(Guid productId, string? slug)
+    /// </summary>
+    /// <param name="productId"></param>
+    /// <param name="slug"></param>
+    /// <returns></returns>
+    /// <exception cref="NotImplementedException"></exception>
+    [Route("/details/{productId}/{slug}")]
     public IActionResult TicketDetails(Guid productId, string slug)
     {
-        throw new NotImplementedException();
+        var product = productRepository.Get(productId);
+
+        return View(product);
     }
 
     public IActionResult Privacy()
