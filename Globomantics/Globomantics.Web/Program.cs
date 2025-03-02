@@ -1,8 +1,18 @@
 using Globomantics.Domain.Models;
 using Globomantics.Infrastructure.Data;
 using Globomantics.Infrastructure.Repositories;
+using Globomantics.Web.Constraints;
+using Globomantics.Web.Transformers;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// This will let us configure how the routing works. 
+builder.Services.AddRouting(options =>
+{
+    // This can now be used lie the build-in constraints
+    options.ConstraintMap["validateSlug"] = typeof(SlugConstraint);
+    options.ConstraintMap["slugTransform"] = typeof(SlugParameterTransformer);
+});
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
