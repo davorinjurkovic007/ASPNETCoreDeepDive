@@ -4,6 +4,12 @@ using Globomantics.Infrastructure.Repositories;
 using Globomantics.Web.Constraints;
 using Globomantics.Web.Transformers;
 
+/// Routing to controller actions in ASP.NET Core
+/// https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-9.0
+/// 
+// Routing in ASP.NET Core
+/// https://learn.microsoft.com/en-us/aspnet/core/fundamentals/routing?view=aspnetcore-9.0
+
 var builder = WebApplication.CreateBuilder(args);
 
 // This will let us configure how the routing works. 
