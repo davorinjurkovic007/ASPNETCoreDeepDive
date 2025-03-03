@@ -21,11 +21,17 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        var products = productRepository.All();
+        //var products = productRepository.All();
 
-        logger.LogInformation($"Loaded {products.Count()} products");
+        //logger.LogInformation($"Loaded {products.Count()} products");
 
-        return View(products);
+        //return View(products);
+
+        // ViewComponent involved -> 
+        /// This means that our HomeController and the Index action no longer need to fetch all the products when we are 
+        /// hitting the start page.
+        /// So we could simplified this as well. 
+        return View();
     }
 
     /// <summary>
