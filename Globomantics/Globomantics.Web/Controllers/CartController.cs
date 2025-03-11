@@ -55,13 +55,33 @@ namespace Globomantics.Web.Controllers
         }
 
         [HttpPost]
+        [Route("Update")]
+        [ValidateAntiForgeryToken]
         public IActionResult Update(UpdateQuantitiesModel updateQuantitiesModel)
         {
-            throw new NotImplementedException();
+            if (updateQuantitiesModel.Products is null)
+            {
+                return BadRequest();
+            }
+
+            Cart cart = null!;
+
+            foreach (var product in updateQuantitiesModel.Products)
+            {
+                logger.LogInformation($"Adding products {product.ProductId} to cart {updateQuantitiesModel.CartId}");
+
+                cart = cartRepository.CreateOrUpdate(updateQuantitiesModel.CartId,
+                    product.ProductId, product.Quantity);
+            }
+
+            cartRepository.SaveChanges();
+
+            return RedirectToAction("Index", "Cart");
         }
 
         [HttpPost]
         [Route("Finalize")]
+        [ValidateAntiForgeryToken]
         public IActionResult Create(CreateOrderModel createOrderModel)
         {
             if (createOrderModel.Customer is null)
