@@ -3,6 +3,7 @@ using Globomantics.Infrastructure.Data;
 using Globomantics.Infrastructure.Repositories;
 using Globomantics.Web.Controllers;
 using Globomantics.Web.Models;
+using Globomantics.Web.Tests.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
@@ -47,7 +48,7 @@ public class CartControllerTests
         new CartRepository(context),
         new CustomerRepository(context),
         new OrderRepository(context),
-        ////new InMemoryStateRepository(),
+        new InMemoryStateRepository(),
         logger
         );
 

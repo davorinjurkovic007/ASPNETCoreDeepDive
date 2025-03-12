@@ -12,19 +12,19 @@ namespace Globomantics.Web.Controllers
         private readonly ICartRepository cartRepository;
         private readonly IRepository<Customer> customerRepository;
         private readonly IRepository<Order> orderRepository;
-        //private readonly IStateRepository stateRepository;
+        private readonly IStateRepository stateRepository;
 
         public CartController(ICartRepository cartRepository,
             IRepository<Customer> customerRepository,
             IRepository<Order> orderRepository,
-            //IStateRepository stateRepository,
+            IStateRepository stateRepository,
             ILogger<CartController> logger)
         {
             this.logger = logger;
             this.cartRepository = cartRepository;
             this.customerRepository = customerRepository;
             this.orderRepository = orderRepository;
-            //this.stateRepository = stateRepository;
+            this.stateRepository = stateRepository;
         }
 
         public IActionResult Index(Guid? id)
@@ -51,6 +51,9 @@ namespace Globomantics.Web.Controllers
 
             cartRepository.SaveChanges();
 
+            stateRepository.SetValue("NumberOfItems", cart.LineItems.Sum(x => x.Quantity).ToString());
+            stateRepository.SetValue("CartId", cart.CartId.ToString()!);
+
             return RedirectToAction("Index", "Cart");
         }
 
@@ -75,6 +78,9 @@ namespace Globomantics.Web.Controllers
             }
 
             cartRepository.SaveChanges();
+
+            stateRepository.SetValue("NumberOfItems", cart.LineItems.Sum(x => x.Quantity).ToString());
+            stateRepository.SetValue("CartId", cart.CartId.ToString()!);
 
             return RedirectToAction("Index", "Cart");
         }
@@ -153,8 +159,8 @@ namespace Globomantics.Web.Controllers
 
             logger.LogInformation($"Order placed for {customer.CustomerId}");
 
-            //stateRepository.Remove("NumberOfItems");
-            //stateRepository.Remove("CartId");
+            stateRepository.Remove("NumberOfItems");
+            stateRepository.Remove("CartId");
 
             return RedirectToAction("ThankYou");
         }
