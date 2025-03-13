@@ -6,6 +6,7 @@ using Globomantics.Domain.Models;
 using System.ComponentModel.DataAnnotations;
 using NuGet.Protocol;
 using Globomantics.Web.Filters;
+using Globomantics.Web.Attributes;
 
 namespace Globomantics.Web.Controllers;
 
@@ -20,7 +21,8 @@ public class HomeController : Controller
         this.logger = logger;
     }
 
-    [ServiceFilter(typeof(TimerFilter))]
+    [TimerFilter]
+    //[ServiceFilter(typeof(TimerFilter))]
     public IActionResult Index()
     {
         //var products = productRepository.All();
