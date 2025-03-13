@@ -6,6 +6,8 @@ using Globomantics.Web.Filters;
 using Globomantics.Web.Repositories;
 using Globomantics.Web.Transformers;
 using Globomantics.Web.ValueProviders;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore.Internal;
 
 /// Routing to controller actions in ASP.NET Core
 /// https://learn.microsoft.com/en-us/aspnet/core/mvc/controllers/routing?view=aspnetcore-9.0
@@ -18,6 +20,15 @@ internal class Program
     private static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
+
+        ///The route ha to match what you have specified on the controller or on the action
+        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+            .AddCookie(options =>
+            {
+                options.ExpireTimeSpan = TimeSpan.FromMinutes(20);
+                options.SlidingExpiration = true;
+                options.LoginPath = "/Login";
+            });
 
         builder.Services.AddSession();
 
@@ -71,9 +82,14 @@ internal class Program
 
         app.UseHttpsRedirection();
 
+        app.MapStaticAssets();
+
         app.UseRouting();
 
-        app.MapStaticAssets();
+        /// The have to be added in this exact order
+        app.UseAuthentication();
+
+        app.UseAuthorization();
 
         app.UseSession();
 
