@@ -9,12 +9,13 @@ using Globomantics.Domain.Models;
 using Globomantics.Infrastructure.Data;
 using Microsoft.AspNetCore.Authorization;
 
-namespace Globomantics.Web.Controllers
+namespace Globomantics.Web.Areas.Administration.Controllers
 {
     /// <summary>
     /// Can be set on the Controller or Action
     /// </summary>
     /// 
+    [Area("Administration")]
     [Authorize]
     public class CustomersController : Controller
     {

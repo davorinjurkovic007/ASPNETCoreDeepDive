@@ -5,8 +5,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
-namespace Globomantics.Web.Controllers;
+namespace Globomantics.Web.Areas.Administration.Controllers;
 
+[Area("Administration")]
 public class LoginController : Controller
 {
     /// <summary>

@@ -115,6 +115,19 @@ internal class Program
         //    .WithStaticAssets();
 
 
+        ///If it doesn't match on this pattern it will evalueate the next route to see if there's a match
+        app.MapControllerRoute(
+            name: "administrationDefault",
+            defaults: new { controller = "Home" },
+            pattern: "{area:exists}/{action=Index}/{id?}"
+            )
+            .WithStaticAssets();
+
+        app.MapControllerRoute(
+            name: "administration",
+            pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}")
+            .WithStaticAssets();
+
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}")
